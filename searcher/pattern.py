@@ -15,6 +15,7 @@ class Pattern:
         dir_only = pattern_str.endswith("/")
         if dir_only:
             pattern_str = pattern_str[:-1]
+        pattern_str = f"{pattern_str}$"
         pattern_re = re.compile(pattern_str)
         return Pattern(pattern_re, dir_only)
 
