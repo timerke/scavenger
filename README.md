@@ -1,2 +1,2 @@
 # scavenger
-Junk file search script
+Скрипт поиска мусорных файлов.
