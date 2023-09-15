@@ -1,3 +1,3 @@
 cd ..
-venv\Scripts\python run_client.py
+venv\Scripts\python run.py
 pause
