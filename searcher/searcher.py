@@ -40,7 +40,7 @@ class Searcher:
                     ut.print_(f"Access denied to '{obj_path}'")
 
     def print_junk(self) -> None:
-        ut.print_("Found junk files and directories:")
+        ut.print_("\nFound junk files and directories:")
         for file_or_dir in self._junk:
             ut.print_(file_or_dir)
 
