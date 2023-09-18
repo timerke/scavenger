@@ -19,9 +19,9 @@
 
 # Libraries
 #*.lib
-*.a
-*.la
-*.lo
+#*.a
+#*.la
+#*.lo
 
 # Shared objects (inc. Windows DLLs)
 #*.dll
@@ -30,12 +30,12 @@
 #*.dylib
 
 # Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+#*.exe
+#*.out
+#*.app
+#*.i*86
+#*.x86_64
+#*.hex
 
 # Debug files
 *.dSYM/
@@ -77,15 +77,15 @@ dkms.conf
 *.smod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
+#*.lai
+#*.la
+#*.a
 #*.lib
 
 # Executables
-*.exe
-*.out
-*.app
+#*.exe
+#*.out
+#*.app
 
 
 # ------Gitignore for Python------
@@ -105,8 +105,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+#lib/
+#lib64/
 parts/
 sdist/
 var/
