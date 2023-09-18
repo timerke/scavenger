@@ -45,9 +45,12 @@ class Searcher:
         return total_number
 
     def print_junk(self) -> None:
-        ut.print_("\nFound junk files and directories:")
-        for file_or_dir in self._junk:
-            ut.print_(file_or_dir)
+        if len(self._junk) > 0:
+            ut.print_("\nFound junk files and directories:")
+            for file_or_dir in self._junk:
+                ut.print_(file_or_dir)
+        else:
+            ut.print_("\nJunk files and directories not found")
 
     def remove_junk(self, junk: Optional[List[str]] = None) -> None:
         if junk is None:
