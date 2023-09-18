@@ -53,11 +53,13 @@ class Searcher:
             except Exception:
                 ut.print_(f"Failed to remove '{file_or_dir}'")
 
-    def search_junk(self, dir_path: str = os.curdir) -> None:
+    def search_junk(self, dir_path: Optional[str] = None) -> None:
         """
         :param dir_path: directory to search in.
         """
 
         files_and_dirs = []
         self._junk.clear()
+        if dir_path is None:
+            dir_path = os.curdir
         self._search(dir_path, files_and_dirs)
