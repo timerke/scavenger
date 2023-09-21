@@ -19,6 +19,8 @@ class Searcher:
             else:
                 os.remove(obj_path)
             ut.print_(f"'{obj_path}' removed")
+        else:
+            ut.print_(f"No '{obj_path}'")
 
     def _search(self, dir_path: str, files_and_dirs: List[str], total_number: int) -> int:
         """
@@ -70,4 +72,7 @@ class Searcher:
         self._junk.clear()
         if dir_path is None:
             dir_path = os.curdir
-        self._search(dir_path, files_and_dirs, 0)
+        try:
+            self._search(dir_path, files_and_dirs, 0)
+        except FileNotFoundError:
+            ut.print_(f"No directory '{dir_path}'")

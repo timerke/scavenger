@@ -1,12 +1,12 @@
 # ------Gitignore for C------
 # Prerequisites
-*.d
+#*.d
 
 # Object files
-*.o
-*.ko
-*.obj
-*.elf
+#*.o
+#*.ko
+#*.obj
+#*.elf
 
 # Linker output
 *.ilk
@@ -55,13 +55,13 @@ dkms.conf
 
 # ------Gitignore for C++------
 # Prerequisites
-*.d
+#*.d
 
 # Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#*.slo
+#*.lo
+#*.o
+#*.obj
 
 # Precompiled Headers
 *.gch
@@ -102,14 +102,14 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-downloads/
+#downloads/
 eggs/
 .eggs/
 #lib/
 #lib64/
 parts/
 sdist/
-var/
+#var/
 wheels/
 share/python-wheels/
 *.egg-info/
@@ -143,14 +143,14 @@ coverage.xml
 cover/
 
 # Translations
-*.mo
-*.pot
+#*.mo
+#*.pot
 
 # Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+#*.log
+#local_settings.py
+#db.sqlite3
+#db.sqlite3-journal
 
 # Flask stuff:
 instance/

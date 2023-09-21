@@ -1,7 +1,6 @@
 import argparse
 import sys
 from typing import Optional
-from searcher import Searcher
 
 
 def run_console(dir_path: Optional[str] = None) -> None:
@@ -9,9 +8,10 @@ def run_console(dir_path: Optional[str] = None) -> None:
     :param dir_path: directory to search for garbage.
     """
 
-    searcher = Searcher()
-    searcher.search_junk(dir_path)
-    searcher.print_junk()
+    from console import Menu
+
+    menu = Menu()
+    menu.run(dir_path)
 
 
 def run_gui() -> None:
