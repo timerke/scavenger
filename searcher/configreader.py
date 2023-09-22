@@ -5,6 +5,9 @@ from searcher.pattern import Pattern
 
 
 class ConfigReader:
+    """
+    Class for reading configuration file.
+    """
 
     def __init__(self, config_path: str) -> None:
         """
@@ -17,21 +20,19 @@ class ConfigReader:
 
     def _analyze_content(self, lines: List[str]) -> None:
         """
-        :param lines:
+        :param lines: lines from configuration file.
         """
 
         for line in lines:
             line = line.strip()
-            if not line.startswith("#") and line:
-                pattern = Pattern.analyze_line(line)
-                self._patterns.append(pattern)
+            if line and not line.startswith("#"):
+                self._patterns.append(Pattern.analyze_line(line))
 
     def _init(self) -> None:
         if os.path.exists(self._config_path):
-            lines = self._read_config()
-            self._analyze_content(lines)
+            self._analyze_content(self._read_config())
         else:
-            ut.print_(f"No configuration file '{self._config_path}'")
+            ut.print_(f"Error: no configuration file '{self._config_path}'")
 
     def _read_config(self) -> List[str]:
         """
@@ -43,10 +44,16 @@ class ConfigReader:
                 lines = file.read().split("\n")
         except Exception as exc:
             lines = []
-            ut.print_(f"Failed to read configuration file '{self._config_path}' ({exc})")
+            error = f" ({exc})" if str(exc) else ""
+            ut.print_(f"Error: failed to read configuration file '{self._config_path}'{error}")
         return lines
 
     def match(self, path: str) -> bool:
+        """
+        :param path: path to check if it matches configuration file.
+        :return: True if path matches.
+        """
+
         for pattern in self._patterns:
             if pattern.match(path):
                 return True
