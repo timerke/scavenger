@@ -30,12 +30,12 @@ class Searcher:
 
         for obj_name in os.listdir(dir_path):
             obj_path = os.path.join(dir_path, obj_name)
-            is_junk = self._junk_reader.match(obj_path)
+            is_junk, pattern = self._junk_reader.match(obj_path)
             if is_junk:
                 self._junk_number += 1
                 self._junk.append(obj_path)
                 if self._verbose_mode:
-                    ut.print_(f"Junk found: '{obj_path}'")
+                    ut.print_(f"Junk found. Path: '{obj_path}', pattern: '{pattern}'")
 
             total_number += 1
             ut.print_(f"Number of scanned files and folders: {total_number}, number of found junk: {self._junk_number}",

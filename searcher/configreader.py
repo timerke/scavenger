@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, Optional, Tuple
 from searcher import utils as ut
 from searcher.pattern import Pattern
 
@@ -48,13 +48,13 @@ class ConfigReader:
             ut.print_(f"Error: failed to read configuration file '{self._config_path}'{error}")
         return lines
 
-    def match(self, path: str) -> bool:
+    def match(self, path: str) -> Tuple[bool, Optional[Pattern]]:
         """
         :param path: path to check if it matches configuration file.
-        :return: True if path matches.
+        :return: True if path matches and pattern that path matches.
         """
 
         for pattern in self._patterns:
             if pattern.match(path):
-                return True
-        return False
+                return True, pattern
+        return False, None
