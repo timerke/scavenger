@@ -17,7 +17,7 @@ class Menu:
 
     @staticmethod
     def _exit() -> int:
-        ut.print_("Exit")
+        ut.print_("\nExit")
         return 1
 
     @staticmethod
@@ -70,7 +70,7 @@ class Menu:
         return self._get_user_answer("y", "n") == "y"
 
     def _remove_all(self) -> None:
-        ut.print_("Removing all found junk files and directories...")
+        ut.print_("\nRemoving all found junk files and directories...")
         self._remove_junk(False)
 
     def _remove_junk(self, ask_user: bool = True) -> None:
@@ -96,7 +96,7 @@ class Menu:
             ut.print_("No junk to remove")
 
     def _remove_one_by_one(self) -> None:
-        ut.print_("Removing found junk files and directories one by one...")
+        ut.print_("\nRemoving found junk files and directories one by one...")
         self._remove_junk()
 
     def _search_junk(self, dir_path: Optional[str] = None) -> None:
@@ -106,7 +106,7 @@ class Menu:
 
         if dir_path is None:
             dir_path = self._get_directory_to_search()
-        ut.print_(f"Searching for junk in directory '{dir_path}'...")
+        ut.print_(f"\nSearching for junk in directory '{dir_path}'...")
         self._junk = self._searcher.search_junk(dir_path)
         self._searcher.print_junk()
 

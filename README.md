@@ -7,7 +7,7 @@
 
    - **install.bat**, если Вы работаете в *Windows*;
 
-   - **install.sh**, если Вы работаете в *Linux*:
+   - **install.sh**, если Вы работаете в *Linux/macOS*:
 
      ```bash
      bash install.sh
@@ -17,7 +17,7 @@
 
    - **run.bat**, если Вы работаете в *Windows*;
 
-   - **run.sh**, если Вы работаете в *Linux*:
+   - **run.sh**, если Вы работаете в *Linux/macOS*:
 
      ```bash
      bash run.sh
@@ -28,15 +28,16 @@
    - если Вы работаете в *Windows*:
 
      ```batch
-     venv\Scripts\python run.py --dir DIR
+     venv\Scripts\python run.py --dir DIR --verbose
      ```
 
-   - если Вы работаете в *Linux*:
+   - если Вы работаете в *Linux/macOS*:
 
      ```bash
-     venv/bin/python run.py --dir DIR
+     venv/bin/python run.py --dir DIR --verbose
      ```
 
    В указанных командах используется опциональный флаг:
 
-   - *--dir* - путь до директории, в которой нужно найти мусор.
+   - *--dir* - путь до директории, в которой нужно найти мусор;
+   - *--verbose* - скрипт будет выводить пути до найденных мусорных файлов в реальном времени.
