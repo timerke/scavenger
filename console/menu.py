@@ -21,21 +21,13 @@ class Menu:
         return 1
 
     @staticmethod
-    def _get_answer_to_remove() -> bool:
-        while True:
-            ut.print_("Your choice: ", end="")
-            user_answer = input().lower()
-            if user_answer in ("y", "n"):
-                return user_answer == "y"
-            ut.print_("Unknown choice. Try again")
-
-    @staticmethod
     def _get_directory_to_search() -> str:
         """
         :return: directory in which to search for junk.
         """
 
         ut.print_("In which directory to search junk (by default in current directory)?")
+        ut.print_("Your answer: ", end="")
         dir_path = input()
         if not dir_path:
             dir_path = "."
@@ -50,32 +42,51 @@ class Menu:
                  "a": self._remove_all,
                  "o": self._remove_one_by_one,
                  "q": self._exit}
+        user_answer = self._get_user_answer("s", "a", "o", "q")
+        task = tasks.get(user_answer)
+        if task is not None:
+            return task()
+
+    @staticmethod
+    def _get_user_answer(*valid_answers) -> str:
+        """
+        :param valid_answers: list of valid user answers.
+        :return: user answer.
+        """
+
+        valid_answers = [answer.lower() for answer in valid_answers]
         while True:
-            ut.print_("Your choice: ", end="")
+            ut.print_("Your answer: ", end="")
             user_answer = input().lower()
-            task = tasks.get(user_answer, None)
-            if task is not None:
-                return task()
+            if user_answer in valid_answers:
+                return user_answer
             ut.print_("Unknown choice. Try again")
+
+    def _get_yes_or_no_answer(self) -> bool:
+        """
+        :return: True if user's answer is yes.
+        """
+
+        return self._get_user_answer("y", "n") == "y"
 
     def _remove_all(self) -> None:
         ut.print_("Removing all found junk files and directories...")
-        if self._junk:
-            for file_or_dir in self._junk:
-                try:
-                    self._searcher.remove(file_or_dir)
-                except Exception:
-                    ut.print_(f"Error: failed to remove '{file_or_dir}'")
-            self._junk.clear()
-        else:
-            ut.print_("No junk to remove")
+        self._remove_junk(False)
 
-    def _remove_one_by_one(self) -> None:
-        ut.print_("Removing found junk files and directories one by one...")
+    def _remove_junk(self, ask_user: bool = True) -> None:
+        """
+        :param ask_user: if True, then need to ask user before deleting file or directory.
+        """
+
         if self._junk:
             for file_or_dir in self._junk:
-                ut.print_(f"Remove '{file_or_dir}' (y/n)?")
-                if self._get_answer_to_remove():
+                if ask_user:
+                    ut.print_(f"Remove '{file_or_dir}' (y/n)?")
+                    answer = self._get_yes_or_no_answer()
+                else:
+                    answer = True
+
+                if answer:
                     try:
                         self._searcher.remove(file_or_dir)
                     except Exception:
@@ -83,6 +94,10 @@ class Menu:
             self._junk.clear()
         else:
             ut.print_("No junk to remove")
+
+    def _remove_one_by_one(self) -> None:
+        ut.print_("Removing found junk files and directories one by one...")
+        self._remove_junk()
 
     def _search_junk(self, dir_path: Optional[str] = None) -> None:
         """
