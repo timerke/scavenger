@@ -37,4 +37,4 @@ class Pattern:
 
         result = os.path.isdir(path) if self._dir_only else True
         base_name = os.path.basename(path)
-        return result and bool(self._pattern_re.match(base_name))
+        return result and bool(self._pattern_re.match(path)) or bool(self._pattern_re.match(base_name))

@@ -39,10 +39,10 @@ class Menu:
         """
 
         tasks = {"s": self._search_junk,
-                 "a": self._remove_all,
                  "o": self._remove_one_by_one,
+                 "remove all": self._remove_all,
                  "q": self._exit}
-        user_answer = self._get_user_answer("s", "a", "o", "q")
+        user_answer = self._get_user_answer("s", "o", "remove all", "q")
         task = tasks.get(user_answer)
         if task is not None:
             return task()
@@ -114,8 +114,8 @@ class Menu:
     def _show_menu() -> None:
         ut.print_("\nMenu:")
         ut.print_("\tenter 's' - search junk files and directories;")
-        ut.print_("\tenter 'a' - remove all found junk files and directories at once;")
         ut.print_("\tenter 'o' - remove found junk files and directories one by one;")
+        ut.print_("\tenter 'remove all' - remove all found junk files and directories at once;")
         ut.print_("\tenter 'q' - exit")
 
     def run(self, dir_path: Optional[str] = None) -> None:
