@@ -10,19 +10,33 @@ class Searcher:
     Scavenger hunt class.
     """
 
-    def __init__(self, verbose_mode: bool = False) -> None:
+    def __init__(self, verbose_mode: bool = False, config_exc: Optional[str] = None, config_junk: Optional[str] = None
+                 ) -> None:
         """
-        :param verbose_mode: if True, then searcher will display found junk in real mode.
+        :param verbose_mode: if True, then searcher will display found junk in real mode;
+        :param config_exc: path to configuration file with exceptions;
+        :param config_junk: path to configuration file with junk.
         """
 
         self._dir_config: str = os.path.join(os.curdir, "config")
         self._exceptions: List[Tuple[str, Optional[str]]] = []
         self._exceptions_number: int = 0
-        self._exceptions_reader: ConfigReader = ConfigReader(os.path.join(self._dir_config, "exceptions.txt"))
+        config_exc = config_exc or os.path.join(self._dir_config, "exceptions.txt")
+        self._exceptions_reader: ConfigReader = ConfigReader(config_exc)
         self._junk: List[Tuple[str, Optional[str]]] = []
         self._junk_number: int = 0
-        self._junk_reader: ConfigReader = ConfigReader(os.path.join(self._dir_config, "junk.txt"))
+        config_junk = config_junk or os.path.join(self._dir_config, "junk.txt")
+        self._junk_reader: ConfigReader = ConfigReader(config_junk)
         self._verbose_mode: bool = verbose_mode
+
+    @staticmethod
+    def _print(files_and_dirs: List[Tuple[str, Optional[str]]], obj_name: str) -> None:
+        if len(files_and_dirs) > 0:
+            ut.print_(f"\nFound {obj_name.lower()} files and directories:")
+            for file_or_dir, message in files_and_dirs:
+                ut.print_(f"{file_or_dir}{message}")
+        else:
+            ut.print_(f"\n{obj_name.title()} files and directories not found")
 
     def _search(self, dir_path: str, files_and_dirs: List[str], total_number: int) -> int:
         """
@@ -52,8 +66,8 @@ class Searcher:
                     ut.print_(f"{obj_name} found. Path: '{obj_path}', pattern: '{pattern}'{message}")
 
             total_number += 1
-            ut.print_(f"Number of scanned files and folders: {total_number}, number of found junk: {self._junk_number}",
-                      same_place=True)
+            ut.print_(f"Scanned files and folders: {total_number}, junk: {self._junk_number}, exceptions: "
+                      f"{self._exceptions_number}", same_place=True)
             files_and_dirs.append(obj_path)
             if os.path.isdir(obj_path) and not is_junk:
                 try:
@@ -62,13 +76,11 @@ class Searcher:
                     ut.print_(f"Error: access denied to '{obj_path}'")
         return total_number
 
+    def print_exceptions(self) -> None:
+        self._print(self._exceptions, "exceptions")
+
     def print_junk(self) -> None:
-        if len(self._junk) > 0:
-            ut.print_("\nFound junk files and directories:")
-            for file_or_dir, message in self._junk:
-                ut.print_(f"{file_or_dir}{message}")
-        else:
-            ut.print_("\nJunk files and directories not found")
+        self._print(self._junk, "junk")
 
     @staticmethod
     def remove(obj_path: str) -> None:
