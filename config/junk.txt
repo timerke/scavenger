@@ -64,8 +64,8 @@ dkms.conf
 #*.obj
 
 # Precompiled Headers
-*.gch
-*.pch
+#*.gch
+#*.pch
 
 # Compiled Dynamic libraries
 #*.so
@@ -73,8 +73,8 @@ dkms.conf
 #*.dll
 
 # Fortran module files
-*.mod
-*.smod
+#*.mod
+#*.smod
 
 # Compiled Static libraries
 #*.lai
@@ -98,30 +98,30 @@ __pycache__/
 #*.so
 
 # Distribution / packaging
-.Python
-build/
-develop-eggs/
+#.Python
+#build/
+#develop-eggs/
 #dist/
 #downloads/
-eggs/
-.eggs/
+#eggs/
+#.eggs/
 #lib/
 #lib64/
-parts/
-sdist/
+#parts/
+#sdist/
 #var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+#wheels/
+#share/python-wheels/
+#*.egg-info/
+#.installed.cfg
+#*.egg
+#MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+#*.manifest
+#*.spec
 
 # Installer logs
 pip-log.txt
@@ -163,7 +163,7 @@ docs/_build/
 
 # PyBuilder
 .pybuilder/
-target/
+#target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
