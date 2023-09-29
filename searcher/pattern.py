@@ -37,6 +37,8 @@ class Pattern:
         initial_pattern = pattern_str
         pattern_str = pattern_str.replace(".", "\.")
         pattern_str = pattern_str.replace("*", ".*")
+        pattern_str = pattern_str.replace("?", ".?")
+        pattern_str = pattern_str.replace("+", ".+")
         dir_only = pattern_str.endswith("/")
         if dir_only:
             pattern_str = pattern_str[:-1]
@@ -76,4 +78,5 @@ class Pattern:
 
         result = os.path.isdir(path) if self._dir_only else True
         base_name = os.path.basename(path)
+        path = path.replace(os.sep, "/")
         return result and bool(self._pattern_re.match(path)) or bool(self._pattern_re.match(base_name))
