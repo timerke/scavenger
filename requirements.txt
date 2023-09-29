@@ -1,4 +1,1 @@
-colorama
-paramiko
-PyQt5
 pytest
