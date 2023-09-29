@@ -24,9 +24,9 @@ class ConfigReader:
         """
 
         for line in lines:
-            line = line.strip()
-            if line and not line.startswith("#"):
-                self._patterns.append(Pattern.analyze_line(line))
+            pattern = Pattern.analyze_line(line, self._config_path)
+            if pattern is not None:
+                self._patterns.append(pattern)
 
     def _init(self) -> None:
         if os.path.exists(self._config_path):
