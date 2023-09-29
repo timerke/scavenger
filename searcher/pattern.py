@@ -22,10 +22,6 @@ class Pattern:
     def __repr__(self) -> str:
         return self._pattern_str
 
-    @property
-    def message(self) -> Optional[str]:
-        return self._message
-
     @classmethod
     def _analyze_string_pattern(cls, pattern_str: str, message: Optional[str] = None) -> "Pattern":
         """
@@ -69,6 +65,13 @@ class Pattern:
                 pattern_str, message = line_parts
             return cls._analyze_string_pattern(pattern_str, message)
         return None
+
+    def get_formatted_message(self) -> str:
+        """
+        :return: formatted message when pattern is matched.
+        """
+
+        return f" ({self._message})" if self._message else ""
 
     def match(self, path: str) -> bool:
         """

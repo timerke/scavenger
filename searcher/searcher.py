@@ -15,9 +15,13 @@ class Searcher:
         :param verbose_mode: if True, then searcher will display found junk in real mode.
         """
 
+        self._dir_config: str = os.path.join(os.curdir, "config")
+        self._exceptions: List[Tuple[str, Optional[str]]] = []
+        self._exceptions_number: int = 0
+        self._exceptions_reader: ConfigReader = ConfigReader(os.path.join(self._dir_config, "exceptions.txt"))
         self._junk: List[Tuple[str, Optional[str]]] = []
         self._junk_number: int = 0
-        self._junk_reader: ConfigReader = ConfigReader(os.path.join(os.curdir, "config", "junk.txt"))
+        self._junk_reader: ConfigReader = ConfigReader(os.path.join(self._dir_config, "junk.txt"))
         self._verbose_mode: bool = verbose_mode
 
     def _search(self, dir_path: str, files_and_dirs: List[str], total_number: int) -> int:
@@ -32,11 +36,20 @@ class Searcher:
             obj_path = os.path.join(dir_path, obj_name)
             is_junk, pattern = self._junk_reader.match(obj_path)
             if is_junk:
-                self._junk_number += 1
-                message = f" ({pattern.message})" if pattern.message else ""
-                self._junk.append((obj_path, message))
+                is_exception, exc_pattern = self._exceptions_reader.match(obj_path)
+                if is_exception:
+                    self._exceptions_number += 1
+                    pattern = exc_pattern
+                    obj_list = self._exceptions
+                    obj_name = "Exception"
+                else:
+                    self._junk_number += 1
+                    obj_list = self._junk
+                    obj_name = "Junk"
+                message = pattern.get_formatted_message()
+                obj_list.append((obj_path, message))
                 if self._verbose_mode:
-                    ut.print_(f"Junk found. Path: '{obj_path}', pattern: '{pattern}'{message}")
+                    ut.print_(f"{obj_name} found. Path: '{obj_path}', pattern: '{pattern}'{message}")
 
             total_number += 1
             ut.print_(f"Number of scanned files and folders: {total_number}, number of found junk: {self._junk_number}",

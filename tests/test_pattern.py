@@ -2,23 +2,23 @@ import os
 from searcher.pattern import Pattern
 
 
-def test_message_for_pattern() -> None:
+def test_get_formatted_message() -> None:
     line = "pattern | Message for pattern"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
-    assert pattern.message == "Message for pattern"
+    assert pattern.get_formatted_message() == " (Message for pattern)"
     assert pattern.match("pattern")
     assert not pattern.match("some_pattern")
 
     line = "pattern"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
-    assert pattern.message is None
+    assert pattern.get_formatted_message() == ""
     assert pattern.match("pattern")
     assert not pattern.match("some_pattern")
 
 
-def test_pattern_asterisk() -> None:
+def test_match_asterisk() -> None:
     line = "some_*_pattern"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
@@ -27,7 +27,7 @@ def test_pattern_asterisk() -> None:
     assert not pattern.match(os.path.join("dir_1", "dir_2", "some_pattern"))
 
 
-def test_pattern_backslash_before_hashtag() -> None:
+def test_match_backslash_before_hashtag() -> None:
     line = "\#some_path"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
@@ -36,13 +36,13 @@ def test_pattern_backslash_before_hashtag() -> None:
     assert not pattern.match("some_path")
 
 
-def test_pattern_comment() -> None:
+def test_match_comment() -> None:
     line = "# This is some kind of comment"
     pattern = Pattern.analyze_line(line)
     assert pattern is None
 
 
-def test_pattern_dir_only() -> None:
+def test_match_dir_only() -> None:
     line = "dir_2/"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
@@ -54,13 +54,13 @@ def test_pattern_dir_only() -> None:
     assert not pattern.match(os.path.join("tests", "dir_1", "file"))
 
 
-def test_pattern_empty_line() -> None:
+def test_match_empty_line() -> None:
     line = "   "
     pattern = Pattern.analyze_line(line)
     assert pattern is None
 
 
-def test_pattern_plus_symbol() -> None:
+def test_match_plus_symbol() -> None:
     line = "some_+_pattern"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
@@ -70,7 +70,7 @@ def test_pattern_plus_symbol() -> None:
     assert not pattern.match(os.path.join("dir_1", "dir_2", "some_pattern"))
 
 
-def test_pattern_question_symbol() -> None:
+def test_match_question_symbol() -> None:
     line = "some_?_pattern"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
@@ -80,7 +80,7 @@ def test_pattern_question_symbol() -> None:
     assert not pattern.match(os.path.join("dir_1", "dir_2", "some_pattern"))
 
 
-def test_pattern_slash() -> None:
+def test_match_slash() -> None:
     line = "dir_1/dir_2/file"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None
@@ -89,7 +89,7 @@ def test_pattern_slash() -> None:
     assert not pattern.match("dir2/file")
 
 
-def test_pattern_square_brackets() -> None:
+def test_match_square_brackets() -> None:
     line = "som[ae]pattern"
     pattern = Pattern.analyze_line(line)
     assert pattern is not None

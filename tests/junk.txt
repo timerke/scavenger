@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+__pycache__/
+.idea/
+._DS_Store
+som*_pattern
